@@ -1,0 +1,6 @@
+@Vibro.API_HostAddress = http://localhost:5145
+
+GET {{Vibro.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
