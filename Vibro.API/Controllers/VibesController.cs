@@ -7,19 +7,12 @@ namespace Vibro.API.Controllers
 {
     [ApiController]
     [Route("api/vibes")]
-    public class VibesController : ControllerBase
+    public class VibesController(VibroDbContext db) : ControllerBase
     {
-        private readonly VibroDbContext _db;
-
-        public VibesController(VibroDbContext db)
-        {
-            _db = db;
-        }
-
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Vibe> vibes = _db.Vibes.ToList();
+            List<Vibe> vibes = [.. db.Vibes];
 
             List<VibeDto> vibesDto = [];
             foreach (var vibe in vibes)
@@ -33,14 +26,14 @@ namespace Vibro.API.Controllers
                 });
             }
 
-            return Ok(vibes);
+            return Ok(vibesDto);
         }
 
         [HttpGet]
         [Route("{id:Guid}")]
         public IActionResult GetById(Guid id)
         {
-            Vibe? vibe = _db.Vibes.Find(id);
+            var vibe = db.Vibes.Find(id);
 
             if(vibe == null)
                 return NotFound();
@@ -66,8 +59,8 @@ namespace Vibro.API.Controllers
                 ArtUrl = addVibeRequestDto.ArtUrl,
             };
 
-            _db.Vibes.Add(newVibe);
-            _db.SaveChanges();
+            db.Vibes.Add(newVibe);
+            db.SaveChanges();
 
             var vibeDto = new VibeDto
             {
@@ -77,7 +70,56 @@ namespace Vibro.API.Controllers
                 ArtUrl = newVibe.ArtUrl,
             };
 
-            return CreatedAtAction(nameof(GetById), new { id = vibeDto.Id }, vibeDto);
+            return CreatedAtAction(nameof(Create), new { id = vibeDto.Id }, vibeDto);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateVibeRequestDto updateVibeRequestDto)
+        {
+            var existingVibe = db.Vibes.FirstOrDefault(v => v.Id == id);
+
+            if (existingVibe == null)
+                return NotFound();
+
+            existingVibe.Name = updateVibeRequestDto.Name;
+            existingVibe.Description = updateVibeRequestDto.Description;
+            existingVibe.ArtUrl = updateVibeRequestDto.ArtUrl;
+
+            db.SaveChanges();
+
+            var newVibeDto = new VibeDto
+            {
+                Id = existingVibe.Id,
+                Name = existingVibe.Name,
+                Description = existingVibe.Description,
+                ArtUrl = existingVibe.ArtUrl,
+            };
+
+            return Ok(newVibeDto);
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public IActionResult Delete([FromRoute] Guid id)
+        {
+            var existingVibe = db.Vibes.FirstOrDefault(v => v.Id == id);
+
+            if (existingVibe == null)
+                return NotFound();
+
+            db.Vibes.Remove(existingVibe);
+            db.SaveChanges();
+
+            var deletedVibeDto = new VibeDto
+            {
+                Id = existingVibe.Id,
+                Name = existingVibe.Name,
+                Description = existingVibe.Description,
+                ArtUrl = existingVibe.ArtUrl,
+            };
+
+            return Ok(deletedVibeDto);
         }
     }
 }
