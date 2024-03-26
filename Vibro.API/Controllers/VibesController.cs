@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Vibro.API.Data;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Vibro.API.Models;
 using Vibro.API.Models.DTO;
 using Vibro.API.Repositories;
@@ -10,26 +8,14 @@ namespace Vibro.API.Controllers
 {
     [ApiController]
     [Route("api/vibes")]
-    public class VibesController(IVibeRepository vibeRepository) : ControllerBase
+    public class VibesController(IVibeRepository vibeRepository, IMapper mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var vibes = await vibeRepository.GetAllAsync();
 
-            List<VibeDto> vibesDto = [];
-            foreach (var vibe in vibes)
-            {
-                vibesDto.Add(new VibeDto()
-                {
-                    Id = vibe.Id,
-                    Name = vibe.Name,
-                    Description = vibe.Description,
-                    ArtUrl = vibe.ArtUrl,
-                });
-            }
-
-            return Ok(vibesDto);
+            return Ok(mapper.Map<List<VibeDto>>(vibes));
         }
 
         [HttpGet]
@@ -38,59 +24,30 @@ namespace Vibro.API.Controllers
         {
             var vibe = await vibeRepository.GetByIdAsync(id);
 
-            if(vibe == null)
-                return NotFound();
+            if(vibe == null) return NotFound();
 
-            return Ok(new VibeDto()
-            {
-                Id = vibe.Id,
-                Name = vibe.Name,
-                Description = vibe.Description,
-                ArtUrl = vibe.ArtUrl,
-            });
+            return Ok(mapper.Map<VibeDto>(vibe));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddVibeRequestDto addVibeRequestDto)
         {
-            var newVibe = await vibeRepository.CreateAsync(new Vibe
-            {
-                Name = addVibeRequestDto.Name,
-                Description = addVibeRequestDto.Description,
-                ArtUrl = addVibeRequestDto.ArtUrl,
-            });
+            var newVibe = await vibeRepository.CreateAsync(mapper.Map<Vibe>(addVibeRequestDto));
 
-            return CreatedAtAction(nameof(Create), new { id = newVibe.Id }, new VibeDto
-            {
-                Id = newVibe.Id,
-                Name = newVibe.Name,
-                Description = newVibe.Description,
-                ArtUrl = newVibe.ArtUrl,
-            });
+            var vibeDto = mapper.Map<VibeDto>(newVibe);
+
+            return CreatedAtAction(nameof(Create), new { id = vibeDto.Id }, vibeDto);
         }
 
         [HttpPut]
         [Route("{id:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateVibeRequestDto updateVibeRequestDto)
         {
+            var existingVibe = await vibeRepository.UpdateAsync(id, mapper.Map<Vibe>(updateVibeRequestDto));
 
-            var existingVibe = await vibeRepository.UpdateAsync(id, new Vibe ()
-            {
-                Name = updateVibeRequestDto.Name,
-                Description = updateVibeRequestDto.Description,
-                ArtUrl = updateVibeRequestDto.ArtUrl,
-            });
+            if (existingVibe == null) return NotFound();
 
-            if (existingVibe == null)
-                return NotFound();
-
-            return Ok(new VibeDto
-            {
-                Id = existingVibe.Id,
-                Name = existingVibe.Name,
-                Description = existingVibe.Description,
-                ArtUrl = existingVibe.ArtUrl,
-            });
+            return Ok(mapper.Map<VibeDto>(existingVibe));
         }
 
         [HttpDelete]
@@ -99,16 +56,9 @@ namespace Vibro.API.Controllers
         {
             var existingVibe = await vibeRepository.DeleteAsync(id);
 
-            if (existingVibe == null)
-                return NotFound();
+            if (existingVibe == null) return NotFound();
 
-            return Ok(new VibeDto
-            {
-                Id = existingVibe.Id,
-                Name = existingVibe.Name,
-                Description = existingVibe.Description,
-                ArtUrl = existingVibe.ArtUrl,
-            });
+            return Ok(mapper.Map<VibeDto>(existingVibe));
         }
     }
 }

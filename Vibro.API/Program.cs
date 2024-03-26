@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Vibro.API.Data;
+using Vibro.API.Mappings;
 using Vibro.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<VibroDbContext>(options =>
 });
 
 builder.Services.AddScoped<IVibeRepository, SqlVibeRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
