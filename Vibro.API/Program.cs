@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Vibro.API.Data;
+using Vibro.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<VibroDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("VibroConnectionString"));
 });
+
+builder.Services.AddScoped<IVibeRepository, SqlVibeRepository>();
 
 var app = builder.Build();
 
