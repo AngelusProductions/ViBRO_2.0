@@ -1,5 +1,4 @@
 ﻿using Vibro.API.Models;
-using Vibro.API.Models.DTO;
 
 namespace Vibro.API.Repositories
 {

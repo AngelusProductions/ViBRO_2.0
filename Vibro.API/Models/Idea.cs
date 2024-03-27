@@ -13,6 +13,6 @@
         public required Guid MixId { get; set; }
 
         // Navigation Properties
-        public required Mix Mix { get; set; }
+        public Mix? Mix { get; set; }
     }
 }
