@@ -28,8 +28,7 @@ namespace Vibro.API.Repositories
         {
             var existingVibe = await db.Vibes.FirstOrDefaultAsync(v => v.Id == id);
 
-            if(existingVibe == null)
-                return null;
+            if(existingVibe == null) return null;
 
             existingVibe.Name = vibe.Name;
             existingVibe.Description = vibe.Description;
@@ -44,8 +43,7 @@ namespace Vibro.API.Repositories
         {
             var existingVibe = await db.Vibes.FirstOrDefaultAsync(v => v.Id == id);
 
-            if(existingVibe == null)
-                return null;
+            if(existingVibe == null) return null;
 
             db.Vibes.Remove(existingVibe);
             await db.SaveChangesAsync();

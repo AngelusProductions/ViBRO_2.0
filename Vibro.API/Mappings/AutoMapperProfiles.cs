@@ -9,8 +9,11 @@ namespace Vibro.API.Mappings
         public AutoMapperProfiles()
         {
             CreateMap<Vibe, VibeDto>().ReverseMap();
-            CreateMap<AddVibeRequestDto, Vibe>().ReverseMap();
-            CreateMap<UpdateVibeRequestDto, Vibe>().ReverseMap();
+            CreateMap<Vibe, AddVibeRequestDto>().ReverseMap();
+            CreateMap<Vibe, UpdateVibeRequestDto>().ReverseMap();
+            CreateMap<Mix, MixDto>().ReverseMap();
+            CreateMap<Mix, AddMixRequestDto>().ReverseMap();
+            CreateMap<Mix, UpdateMixRequestDto>().ReverseMap();
         }
     }
 }
