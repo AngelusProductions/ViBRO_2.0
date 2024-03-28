@@ -14,6 +14,9 @@ namespace Vibro.API.Mappings
             CreateMap<Mix, MixDto>().ReverseMap();
             CreateMap<Mix, AddMixRequestDto>().ReverseMap();
             CreateMap<Mix, UpdateMixRequestDto>().ReverseMap();
+            CreateMap<Idea, IdeaDto>().ReverseMap();
+            CreateMap<Idea, AddIdeaRequestDto>().ReverseMap();
+            CreateMap<Idea, UpdateIdeaRequestDto>().ReverseMap();
         }
     }
 }

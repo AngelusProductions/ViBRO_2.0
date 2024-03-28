@@ -11,7 +11,7 @@ namespace Vibro.API.Repositories
             return await db.Mixes.Include(m => m.Vibe).ToListAsync();
         }
 
-        public async Task<Mix?> GetMixById(Guid id)
+        public async Task<Mix?> GetByIdAsync(Guid id)
         {
             return await db.Mixes.Include(m => m.Vibe).FirstOrDefaultAsync(m => m.Id == id);
         }

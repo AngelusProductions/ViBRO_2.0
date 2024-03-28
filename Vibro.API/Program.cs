@@ -19,6 +19,7 @@ builder.Services.AddDbContext<VibroDbContext>(options =>
 
 builder.Services.AddScoped<IVibeRepository, SqlVibeRepository>();
 builder.Services.AddScoped<IMixRepository, SqlMixRepository>();
+builder.Services.AddScoped<IIdeaRepository, SqlIdeaRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

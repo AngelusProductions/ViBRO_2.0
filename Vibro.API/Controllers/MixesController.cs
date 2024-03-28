@@ -22,7 +22,7 @@ namespace Vibro.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var mix = await mixRepository.GetMixById(id);
+            var mix = await mixRepository.GetByIdAsync(id);
 
             if (mix == null) return NotFound();
 

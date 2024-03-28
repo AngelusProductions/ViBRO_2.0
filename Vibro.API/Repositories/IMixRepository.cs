@@ -6,7 +6,7 @@ namespace Vibro.API.Repositories
     {
         Task<List<Mix>> GetAllAsync();
 
-        Task<Mix?> GetMixById(Guid id);
+        Task<Mix?> GetByIdAsync(Guid id);
 
         Task<Mix> CreateAsync(Mix mix);
 
