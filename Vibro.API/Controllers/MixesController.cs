@@ -3,6 +3,7 @@ using Vibro.API.Models;
 using Vibro.API.Models.DTO;
 using Vibro.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Vibro.API.Util;
 
 namespace Vibro.API.Controllers
 {
@@ -30,6 +31,7 @@ namespace Vibro.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddMixRequestDto addMixRequestDto)
         {
             var newMix = mapper.Map<Mix>(addMixRequestDto);
@@ -40,6 +42,7 @@ namespace Vibro.API.Controllers
         }
 
         [HttpPut]
+        [ValidateModel]
         [Route("{id:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMixRequestDto updateMixRequestDto)
         {

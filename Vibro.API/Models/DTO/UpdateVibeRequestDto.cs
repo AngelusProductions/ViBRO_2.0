@@ -1,9 +1,12 @@
-﻿namespace Vibro.API.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Vibro.API.Models.DTO
 {
     public class UpdateVibeRequestDto
     {
         public required string Name { get; set; }
 
+        [MinLength(3)]
         public required string Description { get; set; }
 
         public required string ArtUrl { get; set; }
