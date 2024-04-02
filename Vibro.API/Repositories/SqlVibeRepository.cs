@@ -6,9 +6,22 @@ namespace Vibro.API.Repositories
 {
     public class SqlVibeRepository(VibroDbContext db) : IVibeRepository
     {
-        public async Task<List<Vibe>> GetAllAsync()
+        public async Task<List<Vibe>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
+            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
         {
-            return await db.Vibes.ToListAsync();
+            var vibes = db.Vibes.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    vibes = vibes.Where(v => v.Name.Contains(filterQuery));
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    vibes = isAscending ? vibes.OrderBy(v => v.Name) : vibes.OrderByDescending(v => v.Name);
+
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await vibes.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Vibe?> GetByIdAsync(Guid id)
@@ -28,7 +41,7 @@ namespace Vibro.API.Repositories
         {
             var existingVibe = await db.Vibes.FirstOrDefaultAsync(v => v.Id == id);
 
-            if(existingVibe == null) return null;
+            if (existingVibe == null) return null;
 
             existingVibe.Name = vibe.Name;
             existingVibe.Description = vibe.Description;
@@ -43,7 +56,7 @@ namespace Vibro.API.Repositories
         {
             var existingVibe = await db.Vibes.FirstOrDefaultAsync(v => v.Id == id);
 
-            if(existingVibe == null) return null;
+            if (existingVibe == null) return null;
 
             db.Vibes.Remove(existingVibe);
             await db.SaveChangesAsync();

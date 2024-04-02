@@ -6,9 +6,33 @@ namespace Vibro.API.Repositories
 {
     public class SqlIdeaRepository(VibroDbContext db) : IIdeaRepository
     {
-        public async Task<List<Idea>> GetAllAsync()
+        public async Task<List<Idea>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
+            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000, Guid? mixId = null)
         {
-            return await db.Ideas.Include(i => i.Mix).ThenInclude(m => m.Vibe).ToListAsync();
+            var ideas = db.Ideas.Include(i => i.Mix).ThenInclude(m => m.Vibe).AsQueryable();
+
+            if (mixId != null)
+                ideas = ideas.Where(i => i.MixId == mixId);
+
+            if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    ideas = ideas.Where(i => i.Name.Contains(filterQuery));
+                if (filterOn.Equals("Timestamp", StringComparison.OrdinalIgnoreCase))
+                    ideas = ideas.Where(i => i.Timestamp == int.Parse(filterQuery));
+            }
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    ideas = isAscending ? ideas.OrderBy(i => i.Name) : ideas.OrderByDescending(i => i.Name);
+                if (sortBy.Equals("Timestamp", StringComparison.OrdinalIgnoreCase))
+                    ideas = isAscending ? ideas.OrderBy(i => i.Timestamp) : ideas.OrderByDescending(i => i.Timestamp);
+            }
+
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await ideas.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Idea?> GetByIdAsync(Guid id)

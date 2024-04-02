@@ -6,9 +6,35 @@ namespace Vibro.API.Repositories
 {
     public class SqlMixRepository(VibroDbContext db) : IMixRepository
     {
-        public async Task<List<Mix>> GetAllAsync()
+        public async Task<List<Mix>> GetAllAsync(string? filterOn = null, string? filterQuery = null,
+            string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000, Guid? vibeId = null)
         {
-            return await db.Mixes.Include(m => m.Vibe).ToListAsync();
+            var mixes = db.Mixes.Include(m => m.Vibe).AsQueryable();
+
+            if (vibeId != null)
+                mixes = mixes.Where(m => m.VibeId == vibeId);
+
+            if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    mixes = mixes.Where(m => m.Name.Contains(filterQuery));
+                if (filterOn.Equals("Number", StringComparison.OrdinalIgnoreCase))
+                    mixes = mixes.Where(m => m.Number == int.Parse(filterQuery));
+            }
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    mixes = isAscending ? mixes.OrderBy(m => m.Name) : mixes.OrderByDescending(m => m.Name);
+                if (sortBy.Equals("Number", StringComparison.OrdinalIgnoreCase))
+                    mixes = isAscending ? mixes.OrderBy(m => m.Number) : mixes.OrderByDescending(m => m.Number);
+                if (sortBy.Equals("Runtime", StringComparison.OrdinalIgnoreCase))
+                    mixes = isAscending ? mixes.OrderBy(m => m.Runtime) : mixes.OrderByDescending(m => m.Runtime);
+            }
+
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await mixes.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Mix?> GetByIdAsync(Guid id)

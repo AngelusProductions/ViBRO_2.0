@@ -11,8 +11,7 @@
         public required int Timestamp { get; set; }
 
         public required Guid MixId { get; set; }
-
-        // Navigation Properties
+        
         public Mix? Mix { get; set; }
     }
 }

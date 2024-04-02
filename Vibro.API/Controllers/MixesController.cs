@@ -12,9 +12,11 @@ namespace Vibro.API.Controllers
     public class MixesController(IMixRepository mixRepository, IMapper mapper) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000, [FromQuery] Guid? vibeId = null)
         {
-            var mixes = await mixRepository.GetAllAsync();
+            var mixes = await mixRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize, vibeId);
 
             return Ok(mapper.Map<List<MixDto>>(mixes));
         }

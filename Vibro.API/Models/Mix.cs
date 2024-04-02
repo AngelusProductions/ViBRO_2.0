@@ -16,7 +16,6 @@
 
         public required Guid VibeId { get; set; }
 
-        // Navigation Properties
         public Vibe? Vibe { get; set; }
     }
 }

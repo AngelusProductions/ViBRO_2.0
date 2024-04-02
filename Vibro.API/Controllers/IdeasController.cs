@@ -12,9 +12,11 @@ namespace Vibro.API.Controllers
     public class IdeasController(IIdeaRepository ideaRepository, IMapper mapper) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000, [FromQuery] Guid? mixId = null)
         {
-            var ideas = await ideaRepository.GetAllAsync();
+            var ideas = await ideaRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize, mixId);
 
             return Ok(mapper.Map<List<IdeaDto>>(ideas));
         }
