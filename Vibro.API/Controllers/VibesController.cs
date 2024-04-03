@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vibro.API.Models;
 using Vibro.API.Models.DTO;
@@ -9,6 +10,7 @@ namespace Vibro.API.Controllers
 {
     [ApiController]
     [Route("api/vibes")]
+    [Authorize]
     public class VibesController(IVibeRepository vibeRepository, IMapper mapper) : ControllerBase
     {
         [HttpGet]

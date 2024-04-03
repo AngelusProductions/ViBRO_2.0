@@ -6,7 +6,7 @@ namespace Vibro.API.Data
 {
     public class VibroDbContext : DbContext
     {
-        public VibroDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) {}
+        public VibroDbContext(DbContextOptions<VibroDbContext> dbContextOptions) : base(dbContextOptions) {}
 
         public DbSet<Vibe> Vibes { get; set; }
 
