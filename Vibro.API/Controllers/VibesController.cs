@@ -10,10 +10,10 @@ namespace Vibro.API.Controllers
 {
     [ApiController]
     [Route("api/vibes")]
-    [Authorize]
     public class VibesController(IVibeRepository vibeRepository, IMapper mapper) : ControllerBase
     {
         [HttpGet]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
@@ -25,6 +25,7 @@ namespace Vibro.API.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var vibe = await vibeRepository.GetByIdAsync(id);
@@ -36,6 +37,7 @@ namespace Vibro.API.Controllers
 
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddVibeRequestDto addVibeRequestDto)
         {
             var newVibe = await vibeRepository.CreateAsync(mapper.Map<Vibe>(addVibeRequestDto));
@@ -48,6 +50,7 @@ namespace Vibro.API.Controllers
         [HttpPut]
         [ValidateModel]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateVibeRequestDto updateVibeRequestDto)
         {
             var existingVibe = await vibeRepository.UpdateAsync(id, mapper.Map<Vibe>(updateVibeRequestDto));
@@ -59,6 +62,7 @@ namespace Vibro.API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var existingVibe = await vibeRepository.DeleteAsync(id);

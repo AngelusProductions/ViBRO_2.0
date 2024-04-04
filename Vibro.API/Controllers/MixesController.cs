@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Vibro.API.Models;
 using Vibro.API.Models.DTO;
 using Vibro.API.Repositories;
@@ -12,6 +13,7 @@ namespace Vibro.API.Controllers
     public class MixesController(IMixRepository mixRepository, IMapper mapper) : ControllerBase
     {
         [HttpGet]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000, [FromQuery] Guid? vibeId = null)
@@ -23,6 +25,7 @@ namespace Vibro.API.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var mix = await mixRepository.GetByIdAsync(id);
@@ -34,6 +37,7 @@ namespace Vibro.API.Controllers
 
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddMixRequestDto addMixRequestDto)
         {
             var newMix = mapper.Map<Mix>(addMixRequestDto);
@@ -46,6 +50,7 @@ namespace Vibro.API.Controllers
         [HttpPut]
         [ValidateModel]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateMixRequestDto updateMixRequestDto)
         {
             var existingMix = await mixRepository.UpdateAsync(id, mapper.Map<Mix>(updateMixRequestDto));
@@ -57,6 +62,8 @@ namespace Vibro.API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
+
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var existingMix = await mixRepository.DeleteAsync(id);

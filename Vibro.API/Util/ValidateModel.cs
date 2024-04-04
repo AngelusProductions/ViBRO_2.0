@@ -8,9 +8,7 @@ namespace Vibro.API.Util
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (!context.ModelState.IsValid)
-            {
                 context.Result = new BadRequestResult();
-            }
         }
     }
 }
