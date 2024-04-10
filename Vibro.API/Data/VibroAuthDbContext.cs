@@ -23,14 +23,14 @@ namespace Vibro.API.Data
             // Define roles
             var roles = new List<IdentityRole>
             {
-                new IdentityRole
+                new()
                 {
                     Id = readerRoleId,
                     ConcurrencyStamp = readerRoleId,
                     Name = "Reader",
                     NormalizedName = "READER"
                 },
-                new IdentityRole
+                new()
                 {
                     Id = writerRoleId,
                     ConcurrencyStamp = writerRoleId,

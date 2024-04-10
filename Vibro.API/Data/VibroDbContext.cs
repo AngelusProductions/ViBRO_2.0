@@ -14,6 +14,8 @@ namespace Vibro.API.Data
 
         public DbSet<Idea> Ideas { get; set; }
 
+        public DbSet<Image> Images { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Vibe>().HasData(VibeSeed.Data);
