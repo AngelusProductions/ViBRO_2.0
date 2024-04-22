@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Vibro.API.Models;
 using Vibro.API.Models.DTO;
 using Vibro.API.Repositories;
@@ -10,33 +11,39 @@ namespace Vibro.API.Controllers
     public class ImagesController() : ControllerBase
     {
         private readonly IImageRepository? _imageRepository;
+        private readonly ILogger<ImagesController> _logger;
 
-        public ImagesController(IImageRepository? imageRepository) : this()
+        public ImagesController(IImageRepository? imageRepository, ILogger<ImagesController> logger) : this()
         {
             _imageRepository = imageRepository;
+            _logger = logger;
         }
 
         // POST: api/Images
-        [HttpPost]
-        public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto request)
-        {
-            ValidateFileUpload(request);
+       //[HttpPost]
+       // public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto request)
+       // {
+       //     ValidateFileUpload(request);
 
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+       //     if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var image = new Image
-            {
-                File = request.File,
-                FileExtension = Path.GetExtension(request.File.FileName),
-                FileSize = request.File.Length,
-                FileName = request.FileName,
-                FileDescription = request.FileDescription
-            };
+       //     _logger.LogInformation("Uploading image");
 
-            await _imageRepository?.Upload(image)!;
+       //     var image = new Image
+       //     {
+       //         File = request.File,
+       //         FileExtension = Path.GetExtension(request.File.FileName),
+       //         FileSize = request.File.Length,
+       //         FileName = request.FileName,
+       //         FileDescription = request.FileDescription
+       //     };
 
-            return Ok(image);
-        }
+       //     await _imageRepository?.Upload(image)!;
+
+       //     _logger.LogInformation($"Uploaded image with data: {JsonSerializer.Serialize(image)}");
+
+       //     return Ok(image);
+       // }
 
         private void ValidateFileUpload(ImageUploadRequestDto request) 
         {
