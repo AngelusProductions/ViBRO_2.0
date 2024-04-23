@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Vibro.API.Models.DTO;
 using Vibro.API.Repositories;
@@ -8,12 +7,14 @@ namespace Vibro.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository) : ControllerBase
+    public class AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository, ILogger logger) : ControllerBase
     {
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
+            logger.LogInformation("Registering new user");
+
             var identityUser = new IdentityUser
             {
                 UserName = registerRequestDto.Username,
@@ -37,6 +38,8 @@ namespace Vibro.API.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
+            logger.LogInformation("Logging in user");
+
             var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
             if (user == null) return BadRequest("User not found!");
 
