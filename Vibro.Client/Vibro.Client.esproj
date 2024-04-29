@@ -8,7 +8,11 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\Vibro.Client\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app\components\" />
     <Folder Include="src\app\config\" />
-    <Folder Include="src\app\models\" />
+    <Folder Include="src\app\actions\" />
+    <Folder Include="src\app\effects\" />
+    <Folder Include="src\app\state\" />
+    <Folder Include="src\app\reducers\" />
   </ItemGroup>
 </Project>
