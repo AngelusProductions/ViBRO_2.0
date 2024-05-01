@@ -2,12 +2,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vibro.API.Models;
-using Vibro.API.Models.DTO;
-using Vibro.API.Repositories;
-using Vibro.API.Util;
+using Vibro.API1.Models;
+using Vibro.API1.Models.DTO;
+using Vibro.API1.Repositories;
+using Vibro.API1.Util;
 
-namespace Vibro.API.Controllers
+namespace Vibro.API1.Controllers
 {
     [ApiController]
     [Route("api/vibes")]

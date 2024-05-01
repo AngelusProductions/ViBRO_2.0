@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Vibro.API.Models;
-using Vibro.API.Models.DTO;
+using Vibro.API1.Models;
+using Vibro.API1.Models.DTO;
 
-namespace Vibro.API.Mappings
+namespace Vibro.API1.Mappings
 {
     public class AutoMapperProfiles : Profile
     {

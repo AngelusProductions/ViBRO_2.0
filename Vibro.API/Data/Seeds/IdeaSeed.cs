@@ -1,6 +1,6 @@
-﻿using Vibro.API.Models;
+﻿using Vibro.API1.Models;
 
-namespace Vibro.API.Data.Seeds
+namespace Vibro.API1.Data.Seeds
 {
     public static class IdeaSeed
     {

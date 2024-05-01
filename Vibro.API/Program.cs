@@ -6,10 +6,10 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Vibro.API.Data;
-using Vibro.API.Mappings;
-using Vibro.API.Middlewares;
-using Vibro.API.Repositories;
+using Vibro.API1.Data;
+using Vibro.API1.Mappings;
+using Vibro.API1.Middlewares;
+using Vibro.API1.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

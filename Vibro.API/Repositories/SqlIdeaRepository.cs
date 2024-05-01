@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vibro.API.Data;
-using Vibro.API.Models;
+using Vibro.API1.Data;
+using Vibro.API1.Models;
 
-namespace Vibro.API.Repositories
+namespace Vibro.API1.Repositories
 {
     public class SqlIdeaRepository(VibroDbContext db) : IIdeaRepository
     {

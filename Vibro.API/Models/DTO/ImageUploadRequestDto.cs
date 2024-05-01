@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Vibro.API.Models.DTO
+namespace Vibro.API1.Models.DTO
 {
     [Route("api/[controller]")]
     [ApiController]

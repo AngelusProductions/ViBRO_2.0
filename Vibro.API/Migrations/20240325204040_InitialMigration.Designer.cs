@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Vibro.API.Data;
+using Vibro.API1.Data;
 
 #nullable disable
 
-namespace Vibro.API.Migrations
+namespace Vibro.API1.Migrations
 {
     [DbContext(typeof(VibroDbContext))]
     [Migration("20240325204040_InitialMigration")]

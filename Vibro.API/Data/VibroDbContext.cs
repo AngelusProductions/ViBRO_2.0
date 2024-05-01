@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vibro.API.Data.Seeds;
-using Vibro.API.Models;
+using Vibro.API1.Data.Seeds;
+using Vibro.API1.Models;
 
-namespace Vibro.API.Data
+namespace Vibro.API1.Data
 {
     public class VibroDbContext : DbContext
     {

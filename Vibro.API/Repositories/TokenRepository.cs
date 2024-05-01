@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vibro.API.Repositories
+namespace Vibro.API1.Repositories
 {
     public class TokenRepository(IConfiguration configuration) : ITokenRepository
     {

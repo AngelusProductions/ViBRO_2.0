@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Vibro.API.Util
+namespace Vibro.API1.Util
 {
     public class ValidateModel : ActionFilterAttribute
     {

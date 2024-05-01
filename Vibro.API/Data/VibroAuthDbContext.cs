@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace Vibro.API.Data
+namespace Vibro.API1.Data
 {
     public class VibroAuthDbContext : IdentityDbContext
     {

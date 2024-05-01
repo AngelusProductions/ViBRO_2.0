@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Vibro.API.Migrations
+namespace Vibro.API1.Migrations
 {
     /// <inheritdoc />
     public partial class AddingImagesTable : Migration

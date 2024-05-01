@@ -1,4 +1,4 @@
-﻿namespace Vibro.API.Models
+﻿namespace Vibro.API1.Models
 {
     public class Mix
     {

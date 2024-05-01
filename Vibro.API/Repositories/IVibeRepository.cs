@@ -1,6 +1,6 @@
-﻿using Vibro.API.Models;
+﻿using Vibro.API1.Models;
 
-namespace Vibro.API.Repositories
+namespace Vibro.API1.Repositories
 {
     public interface IVibeRepository
     {

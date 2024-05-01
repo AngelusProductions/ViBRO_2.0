@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Vibro.API.Repositories
+namespace Vibro.API1.Repositories
 {
     public interface ITokenRepository
     {

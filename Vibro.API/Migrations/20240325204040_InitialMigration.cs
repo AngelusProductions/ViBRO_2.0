@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Vibro.API.Migrations
+namespace Vibro.API1.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

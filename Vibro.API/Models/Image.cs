@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vibro.API.Models
+namespace Vibro.API1.Models
 {
     public class Image
     {

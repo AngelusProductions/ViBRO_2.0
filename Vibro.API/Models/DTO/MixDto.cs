@@ -1,4 +1,4 @@
-﻿namespace Vibro.API.Models.DTO
+﻿namespace Vibro.API1.Models.DTO
 {
     public class MixDto
     {

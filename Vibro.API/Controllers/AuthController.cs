@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Vibro.API.Models.DTO;
-using Vibro.API.Repositories;
+using Vibro.API1.Models.DTO;
+using Vibro.API1.Repositories;
 
-namespace Vibro.API.Controllers
+namespace Vibro.API1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
