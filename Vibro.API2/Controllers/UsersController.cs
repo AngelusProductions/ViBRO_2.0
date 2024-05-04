@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Vibro.API2.Data;
 using Vibro.API2.Entities;
 
@@ -16,14 +17,16 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<User>> GetUsers()
+    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-        return _context.Users.ToList();
+        var users = await _context.Users.ToListAsync();
+        return users;
     }
 
     [HttpGet("{id}")]
-    public ActionResult<User> GetUser(int id)
+    public async Task<ActionResult<User>> GetUser(int id)
     {
-        return _context.Users.Find(id);
+        var user = await _context.Users.FindAsync(id);
+        return user;
     }
 }
