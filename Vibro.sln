@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vibro.API1", "Vibro.API1\Vibro.API1.csproj", "{3BE01CA5-1EAB-4E65-A2B3-E9CCE6FECCAE}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Vibro.Client", "Vibro.Client\Vibro.Client.csproj", "{AA50BA8C-8E27-4AC2-AC7E-0ADC5F20F1A3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vibro.API2", "Vibro.API2\Vibro.API2.csproj", "{990F924A-E648-476A-8678-9843B95F3DC9}"
 EndProject
 Global
