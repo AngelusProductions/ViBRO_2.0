@@ -5,9 +5,7 @@ using Vibro.API2.Entities;
 
 namespace Vibro.API2.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : BaseApiController
 {
     private readonly DataContext _context;
 
