@@ -1,7 +1,9 @@
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Vibro.API2.Data;
+using Vibro.API2.DTOs;
 using Vibro.API2.Entities;
 
 namespace Vibro.API2.Controllers
@@ -16,14 +18,16 @@ namespace Vibro.API2.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(string username, string password)
+        public async Task<ActionResult<User>> Register(RegisterDto registerDto)
         {
+            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+            
             using var hmac = new HMACSHA512();
 
             var user = new User
             {
-                UserName = username,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
+                Username = registerDto.Username.ToLower(),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
 
@@ -31,6 +35,11 @@ namespace Vibro.API2.Controllers
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        private async Task<bool> UserExists(string username)
+        {
+            return await _context.Users.AnyAsync(x => x.Username == username.ToLower());
         }
     }
 }
